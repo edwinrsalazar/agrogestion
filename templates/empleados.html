@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<body>
+<video autoplay muted loop class="video-fondo">
+    <source src="static/img/video_fondo.mp4" type="video/mp4">
+</video>
+<header class="topbar">
+<h1>Gestión de Empleados</h1>
+</header>
+<button class="btn-volver"><a href="admin.html" class="a">Volver al Panel</a></button>
+<div class="contenido">
+
+<h2 style="color: #ffffff;">Lista de empleados</h2>
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Identificación</th>
+                <th>Contacto</th>
+                <th>Cargo</th>
+                <th>Fecha de Ingreso</th>
+                <th>Área</th>
+                <th>Contacto de Emergencia</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí se llenarán las filas dinámicamente, por ahora colocamos un ejemplo -->
+            <tr>
+                <td>Juan Pérez</td>
+                <td>123456789</td>
+                <td>300000000</td>
+                <td>Supervisor</td>
+                <td>2023-01-15</td>
+                <td>Producción</td>
+                <td>310000000</td>
+                <td>
+                    <button class="btn editar">Editar</button>
+                    <button class="btn eliminar">Eliminar</button>
+                </td>
+            </tr>
+            <!-- Más filas se agregarán aquí con JavaScript o backend -->
+        </tbody>
+    </table>
+
+</tr>
+
+</table>
+
+<button class="btn agregar"><a href="agregar_empleado.html" class="a">Agregar Empleado</a></button>
+
+</div>
+
+</body>
+{% endblock %}

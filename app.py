@@ -196,6 +196,36 @@ def eliminar_usuario(id):
 
     return redirect("/usuarios")
 
+@app.route("/maquinaria")
+def maquinaria():
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM MAQUINARIA")
+    maquinaria = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("maquinaria.html", maquinaria=maquinaria)   
+
+@app.route("/inventario")
+def inventario():
+
+    if "usuario" not in session:
+        return redirect("/login")
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM INVENTARIO")
+    productos = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("inventario.html", productos=productos) 
+
 
 if __name__ == "__main__":
     app.run(debug=True)

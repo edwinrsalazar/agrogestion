@@ -1,0 +1,254 @@
+.barra-superior {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* separa titulo y logo */
+    padding: 0 20px;
+    color: white;
+    z-index: 1000;
+}
+.H1{
+    font-size: 30px;
+    justify-content: center;
+    text-align: center;
+}
+.logo img{
+    width: 70px;  /* tamaño pequeño del logo */
+    height: auto;
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.video-fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* Fondo general */
+body {
+    background: #4CAF50;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Header */
+
+
+
+
+h1 {
+    font-size: 30px;
+    margin-left: 20px;
+}
+
+    
+
+
+/* Contenedor principal */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Caja del login */
+.login-container {
+    background: white;
+    padding: 30px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2e7d32;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* bordes */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #030303;
+}
+
+/* Opciones */
+
+.recordarme{
+    display: flex;
+    align-items: center;
+    gap: 0px; /* espacio pequeño entre checkbox y texto */
+    margin-top: 15px;
+}
+
+.recordarme input{
+    margin: 0;
+}
+
+.recordarme label{
+    margin: 0;
+    margin-right: 0px;
+}
+/* Botón */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #1b5e20;
+}
+
+/* Recuperar contraseña */
+.recuperar {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.recuperar a {
+    text-decoration: none;
+    color: #2e7d32;
+    font-size: 14px;
+}
+
+.recuperar a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    color: white;
+    font-size: 14px;
+}
+
+.panel {
+    display: flex;
+    margin-top: 30px; /* mismo tamaño que la barra superior */
+}
+
+.sidebar {
+    position: fixed;
+    top: 70px;   /* altura del header */
+    left: 0;
+    width: 200px;
+    height: 100vh;
+    background: #E5C84B;
+    padding: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar li {
+    margin: 15px 0;
+    font-weight: bold;
+    cursor: pointer;
+}
+.sidebar li:hover {
+    color: #ffffff;
+    transition: transform 0.3s ease;
+    transform: translateY(-3px);
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+.contenido {
+    flex: 1;
+    padding: 40px;
+}
+
+.tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+    gap: 20px;
+    justify-content: center; /* centra las tarjetas */
+    margin-top: 20px;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+.card{
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover{
+    transform: translateY(-10px);
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.3);
+    background: #84e478e8;
+}
+
+.card img{
+    width: 250px;
+    height: 300px;
+    display: block;
+    margin: 10px auto;
+}
+.contenido{
+    margin-left: 220px; /* ancho de la sidebar + espacio */
+}
+
+.card p{
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border:1px solid #000000;
+}
+
+.card {
+    background: #C9D33A;
+    padding: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    width: 300px;
+    height: 400px;
+    margin: 0 auto;
+}

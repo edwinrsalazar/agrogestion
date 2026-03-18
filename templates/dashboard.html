@@ -4,31 +4,49 @@
 
 {% block content %}
 
-<h2 class="mb-4">Bienvenido, {{ session['usuario'] }}</h2>
-
-<!-- 🔐 BOTÓN SOLO PARA ADMIN -->
-{% if session['rol'] == 'admin' %}
-<div class="mb-4">
-    <a href="/register" class="btn btn-success">
-        + Crear Usuario
-    </a>
+<div class="topbar">
+    <h1>AgroGestión</h1>
 </div>
-{% endif %}
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">Gestión de Usuarios</h5>
-                <p class="card-text">Administrar usuarios del sistema.</p>
-                <a href="#" class="btn btn-success">Ver más</a>
-            </div>
-        </div>
+<div class="panel">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <ul>
+            <li><a href="#">Usuarios</a></li>
+            <li><a href="#">Inventario</a></li>
+            <li><a href="#">Reportes</a></li>
+        </ul>
     </div>
-</div>
 
-<div class="mt-4">
-    <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
+    <!-- CONTENIDO -->
+    <div class="contenido">
+
+        <h2 class="mb-4">Bienvenido, {{ session['usuario'] }}</h2>
+
+        {% if session['rol'] == 'admin' %}
+        <div class="mb-4">
+            <a href="/register" class="btn btn-success">
+                + Crear Usuario
+            </a>
+        </div>
+        {% endif %}
+
+        <div class="tarjetas">
+
+            <div class="card">
+                <img src="{{ url_for('static', filename='img/user.png') }}">
+                <p>Gestión de Usuarios</p>
+            </div>
+
+        </div>
+
+        <div class="mt-4">
+            <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
+        </div>
+
+    </div>
+
 </div>
 
 {% endblock %}

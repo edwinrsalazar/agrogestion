@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Maquinaria</h2>
+
+<table border="1">
+
+<tr>
+<th>ID</th>
+<th>Nombre</th>
+<th>Tipo</th>
+<th>Estado</th>
+<th>Fecha adquisición</th>
+</tr>
+
+{% for m in maquinaria %}
+
+<tr>
+<td>{{ m.id_maquinaria }}</td>
+<td>{{ m.nombre }}</td>
+<td>{{ m.tipo }}</td>
+<td>{{ m.estado }}</td>
+<td>{{ m.fecha_adquisicion }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}
