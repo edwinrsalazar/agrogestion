@@ -1,10 +1,13 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Agrícola - Login</title>
 
-{% block title %}Login{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
 
-{% block content %}
-
-<!-- VIDEO DE FONDO -->
 <video autoplay muted loop class="video-fondo">
     <source src="{{ url_for('static', filename='img/video_2.mp4') }}" type="video/mp4">
 </video>
@@ -15,46 +18,27 @@
 
 <main>
     <div class="login-container">
-
         <h2>Iniciar Sesión</h2>
 
-        <!-- MENSAJE DE ERROR -->
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <p style="color:red; text-align:center;">
-                    {{ messages[0] }}
-                </p>
-            {% endif %}
-        {% endwith %}
+        {% if error %}
+            <div class="alert">{{ error }}</div>
+        {% endif %}
 
-        <form method="POST">
+        <form action="{{ url_for('auth.login') }}" method="POST">
 
-            <!-- Rol -->
-            <label for="rol">Rol</label>
-            <select id="rol" name="rol" required>
-                <option value="">Seleccione su rol</option>
-                <option value="admin">Administrador</option>
-                <option value="empleado">Empleado</option>
-            </select>
+            <label>Usuario</label>
+            <input type="text" name="username" placeholder="Ingrese su usuario" required>
 
-            <!-- Usuario -->
-            <label for="usuario">Usuario</label>
-            <input type="text" id="usuario" name="usuario" placeholder="Ingrese su usuario" required>
+            <label>Contraseña</label>
+            <input type="password" name="password" placeholder="Ingrese su contraseña" required>
 
-            <!-- Contraseña -->
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" required>
-
-            <!-- Recordarme -->
             <div class="recordarme">
-                <input type="checkbox" id="recordar">
-                <label for="recordar">Recordarme</label>
+                <label>Recordarme</label>
+                <input type="checkbox">
             </div>
 
-            <!-- Botón -->
             <button type="submit">Iniciar Sesión</button>
 
-            <!-- Recuperar -->
             <p class="recuperar">
                 <a href="#">¿Olvidaste tu contraseña?</a>
             </p>
@@ -67,4 +51,5 @@
     <p>© 2026 Sistema Agrícola | Todos los derechos reservados</p>
 </footer>
 
-{% endblock %}
+</body>
+</html>

@@ -1,232 +1,36 @@
-from flask import Flask, render_template, request, redirect, session, flash
-import mysql.connector
+from flask import Flask, session, redirect, url_for, render_template
+from config import Config
+
+# IMPORTAR TODAS LAS RUTAS
+from routes.auth_routes import auth_bp
+from routes.usuario_routes import usuario_bp
+from routes.cultivo_routes import cultivo_bp
+from routes.inventario_routes import inventario_bp
+from routes.actividad_routes import actividad_bp
 
 app = Flask(__name__)
-app.secret_key = "super_clave_secreta_123"
 
+# CONFIGURACIÓN
+app.config.from_object(Config)
 
-# 🔹 Conexión a la base de datos
-def get_db_connection():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="0000",  # cambia si tu contraseña es diferente
-        database="agrogestion"
-    )
+# 🔐 CLAVE DE SESIÓN (OBLIGATORIO)
+app.secret_key = "clave_super_segura_123"
 
+# REGISTRAR BLUEPRINTS
+app.register_blueprint(auth_bp)
+app.register_blueprint(usuario_bp)
+app.register_blueprint(cultivo_bp)
+app.register_blueprint(inventario_bp)
+app.register_blueprint(actividad_bp)
 
-# 🔹 Home
-@app.route("/")
-def home():
-    return redirect("/login")
-
-
-# 🔹 Registro de usuarios (solo admin)
-@app.route("/register", methods=["GET", "POST"])
-def register():
-
-    if "usuario" not in session or session.get("rol") != "admin":
-        flash("No tienes permiso para acceder aquí", "danger")
-        return redirect("/dashboard")
-
-    if request.method == "POST":
-
-        nombre = request.form["nombre"]
-        documento = request.form["documento"]
-        correo = request.form["correo"]
-        username = request.form["username"]
-        password = request.form["password"]
-        rol = request.form["rol"]
-
-        try:
-            conn = get_db_connection()
-            cursor = conn.cursor()
-
-            sql = """
-            INSERT INTO usuarios (nombre, documento, correo, username, password, rol)
-            VALUES (%s,%s,%s,%s,%s,%s)
-            """
-
-            valores = (nombre, documento, correo, username, password, rol)
-
-            cursor.execute(sql, valores)
-            conn.commit()
-
-            cursor.close()
-            conn.close()
-
-            flash("Usuario creado correctamente", "success")
-            return redirect("/dashboard")
-
-        except Exception as e:
-            flash(f"Error: {e}", "danger")
-
-    return render_template("register.html")
-
-
-# 🔹 Login
-@app.route("/login", methods=["GET", "POST"])
-def login():
-
-    if request.method == "POST":
-
-        username = request.form["username"]
-        password = request.form["password"]
-
-        conn = get_db_connection()
-        cursor = conn.cursor(dictionary=True)
-
-        cursor.execute(
-            "SELECT * FROM usuarios WHERE username=%s AND password=%s",
-            (username, password)
-        )
-
-        usuario = cursor.fetchone()
-
-        cursor.close()
-        conn.close()
-
-        if usuario:
-            session["usuario"] = usuario["nombre"]
-            session["rol"] = usuario["rol"]
-
-            return redirect("/dashboard")
-
-        else:
-            flash("Usuario o contraseña incorrectos", "danger")
-
-    return render_template("login.html")
-
-
-# 🔹 Dashboard
-@app.route("/dashboard")
+# DASHBOARD (PROTEGIDO)
+@app.route('/dashboard')
 def dashboard():
+    if not session.get('user_id'):
+        return redirect(url_for('auth.login'))
 
-    if "usuario" not in session:
-        return redirect("/login")
+    return render_template('dashboard.html')
 
-    return render_template("dashboard.html")
-
-@app.route("/usuarios")
-def usuarios():
-
-    if "usuario" not in session:
-        return redirect("/login")
-
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM usuarios")
-    lista_usuarios = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
-
-    return render_template("usuarios.html", usuarios=lista_usuarios)
-
-
-# 🔹 Cerrar sesión
-@app.route("/logout")
-def logout():
-
-    session.clear()
-    flash("Sesión cerrada correctamente", "info")
-
-    return redirect("/login")
-
-@app.route("/editar_usuario/<int:id>", methods=["GET", "POST"])
-def editar_usuario(id):
-
-    if "usuario" not in session:
-        return redirect("/login")
-
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    if request.method == "POST":
-
-        nombre = request.form["nombre"]
-        documento = request.form["documento"]
-        correo = request.form["correo"]
-        username = request.form["username"]
-        rol = request.form["rol"]
-
-        sql = """
-        UPDATE usuarios
-        SET nombre=%s, documento=%s, correo=%s, username=%s, rol=%s
-        WHERE id_usuario=%s
-        """
-
-        valores = (nombre, documento, correo, username, rol, id)
-
-        cursor.execute(sql, valores)
-        conn.commit()
-
-        cursor.close()
-        conn.close()
-
-        flash("Usuario actualizado correctamente", "success")
-
-        return redirect("/usuarios")
-
-    cursor.execute("SELECT * FROM usuarios WHERE id_usuario=%s", (id,))
-    usuario = cursor.fetchone()
-
-    cursor.close()
-    conn.close()
-
-    return render_template("editar_usuario.html", usuario=usuario)
-
-@app.route("/eliminar_usuario/<int:id>")
-def eliminar_usuario(id):
-
-    if "usuario" not in session:
-        return redirect("/login")
-
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
-    cursor.execute("DELETE FROM usuarios WHERE id_usuario=%s", (id,))
-    conn.commit()
-
-    cursor.close()
-    conn.close()
-
-    flash("Usuario eliminado correctamente", "info")
-
-    return redirect("/usuarios")
-
-@app.route("/maquinaria")
-def maquinaria():
-
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM MAQUINARIA")
-    maquinaria = cursor.fetchall()
-
-    conn.close()
-
-    return render_template("maquinaria.html", maquinaria=maquinaria)   
-
-@app.route("/inventario")
-def inventario():
-
-    if "usuario" not in session:
-        return redirect("/login")
-
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM INVENTARIO")
-    productos = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
-
-    return render_template("inventario.html", productos=productos) 
-
-
-if __name__ == "__main__":
+# EJECUTAR APP
+if __name__ == '__main__':
     app.run(debug=True)
-

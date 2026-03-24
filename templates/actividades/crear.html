@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Nueva Actividad</h2>
+
+<form method="POST">
+    <input name="tipo" placeholder="Tipo (riego, fertilización)">
+    <input type="date" name="fecha">
+
+    <button>Guardar</button>
+</form>
+
+{% endblock %}

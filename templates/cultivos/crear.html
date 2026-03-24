@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Crear Cultivo</h2>
+
+<form method="POST">
+    <input name="nombre" placeholder="Nombre" required>
+    <input name="tipo" placeholder="Tipo" required>
+    <input name="ubicacion" placeholder="Ubicación" required>
+    <button type="submit">Guardar</button>
+</form>
+
+{% endblock %}

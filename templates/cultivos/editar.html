@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Editar Cultivo</h2>
+
+<form method="POST">
+    <input name="nombre" value="{{ cultivo.nombre }}" required>
+    <input name="tipo" value="{{ cultivo.tipo }}" required>
+    <input name="ubicacion" value="{{ cultivo.ubicacion }}" required>
+    <button type="submit">Actualizar</button>
+</form>
+
+{% endblock %}

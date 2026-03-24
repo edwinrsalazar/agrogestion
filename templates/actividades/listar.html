@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Actividades</h2>
+
+<a href="/actividades/crear">Registrar actividad</a>
+
+<ul>
+{% for a in actividades %}
+    <li>{{ a.tipo }} - {{ a.fecha }}</li>
+{% endfor %}
+</ul>
+
+<td>
+    <a href="/actividades/editar/{{ actividad.id }}">✏️ Editar</a>
+
+    <a href="/actividades/eliminar/{{ actividad.id }}"
+       onclick="return confirm('¿Seguro que deseas eliminar?')">
+       🗑️ Eliminar
+    </a>
+</td>
+
+{% endblock %}

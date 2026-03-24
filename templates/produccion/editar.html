@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Producción{% endblock %}
+
+{% block content %}
+<h2>Editar Producción</h2>
+
+<form method="POST">
+    <input type="hidden" name="id" value="{{ produccion.id }}">
+
+    <label>Cultivo:</label>
+    <input type="text" name="cultivo" value="{{ produccion.cultivo }}" required>
+
+    <label>Cantidad:</label>
+    <input type="number" name="cantidad" value="{{ produccion.cantidad }}" required>
+
+    <button type="submit">Actualizar</button>
+</form>
+
+<a href="/produccion">⬅ Volver</a>
+{% endblock %}

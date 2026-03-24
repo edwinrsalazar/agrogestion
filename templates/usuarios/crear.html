@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Usuario{% endblock %}
+
+{% block content %}
+
+<div class="login-container">
+
+    <h2>Crear Usuario</h2>
+
+    <form method="POST">
+
+        <label>Nombre</label>
+        <input type="text" name="nombre" required>
+
+        <label>Documento</label>
+        <input type="text" name="documento" required>
+
+        <label>Teléfono</label>
+        <input type="text" name="telefono">
+
+        <label>Correo</label>
+        <input type="email" name="correo">
+
+        <label>Usuario</label>
+        <input type="text" name="username" required>
+
+        <label>Contraseña</label>
+        <input type="password" name="password" required>
+
+        <label>Rol</label>
+        <select name="rol">
+            <option value="admin">Admin</option>
+            <option value="usuario">Usuario</option>
+        </select>
+
+        <button type="submit">Crear Usuario</button>
+
+    </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Producción</h2>
+
+<a href="/crear_produccion">Registrar Producción</a>
+<a href="/produccion/editar/{{ produccion.id }}">✏️</a>
+<a href="/produccion/eliminar/{{ produccion.id }}" onclick="return confirm('¿Seguro?')">🗑️</a>
+
+<table border="1">
+<tr>
+    <th>ID</th>
+    <th>Cultivo</th>
+    <th>Cantidad</th>
+    <th>Fecha</th>
+</tr>
+
+{% for p in produccion %}
+<tr>
+    <td>{{ p.id }}</td>
+    <td>{{ p.cultivo_id }}</td>
+    <td>{{ p.cantidad }}</td>
+    <td>{{ p.fecha }}</td>
+</tr>
+{% endfor %}
+
+</table>
+{% endblock %}

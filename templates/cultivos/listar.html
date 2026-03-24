@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Cultivos</h2>
+
+<a href="/crear_cultivo">Crear Cultivo</a>
+<td>
+    <a href="/editar_cultivo/{{ c.id }}">Editar</a>
+    <a href="/eliminar_cultivo/{{ c.id }}">Eliminar</a>
+    <a href="/cultivos/editar/{{ cultivo.id }}">✏️</a>
+    <a href="/cultivos/eliminar/{{ cultivo.id }}" onclick="return confirm('¿Seguro?')">🗑️</a>
+</td>
+
+<table border="1">
+<tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Tipo</th>
+    <th>Ubicación</th>
+    <th>Acciones</th>
+</tr>
+
+{% for c in cultivos %}
+<tr>
+    <td>{{ c.id }}</td>
+    <td>{{ c.nombre }}</td>
+    <td>{{ c.tipo }}</td>
+    <td>{{ c.ubicacion }}</td>
+</tr>
+{% endfor %}
+
+</table>
+{% endblock %}

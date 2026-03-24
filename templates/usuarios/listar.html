@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Usuarios{% endblock %}
+
+{% block content %}
+
+<h2>Gestión de Usuarios</h2>
+
+{% if session.get('rol') == 'admin' %}
+<a href="{{ url_for('usuario.crear') }}">
+    <button>+ Crear Usuario</button>
+</a>
+{% endif %}
+
+<div class="tarjetas">
+
+    {% for u in usuarios %}
+    <div class="card">
+        <p><strong>Nombre:</strong> {{ u.nombre }}</p>
+        <p><strong>Documento:</strong> {{ u.documento }}</p>
+        <p><strong>Correo:</strong> {{ u.correo }}</p>
+        <p><strong>Teléfono:</strong> {{ u.telefono }}</p>
+
+        {% if session.get('rol') == 'admin' %}
+
+        <a href="{{ url_for('usuario.editar', id=u.id_usuarios) }}">
+            <button>Editar</button>
+        </a>
+
+        <a href="{{ url_for('usuario.eliminar', id=u.id_usuarios) }}" 
+           onclick="return confirm('¿Seguro que quieres eliminar este usuario?')">
+            <button style="background-color:red;">Eliminar</button>
+        </a>
+
+        {% endif %}
+
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

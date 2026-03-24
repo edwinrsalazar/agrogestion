@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Actividad{% endblock %}
+
+{% block content %}
+<h2>Editar Actividad</h2>
+
+<form method="POST">
+    <input type="hidden" name="id" value="{{ actividad.id }}">
+
+    <label>Nombre:</label>
+    <input type="text" name="nombre" value="{{ actividad.nombre }}" required>
+
+    <label>Fecha:</label>
+    <input type="date" name="fecha" value="{{ actividad.fecha }}" required>
+
+    <button type="submit">Actualizar</button>
+</form>
+
+<a href="/actividades">⬅ Volver</a>
+{% endblock %}

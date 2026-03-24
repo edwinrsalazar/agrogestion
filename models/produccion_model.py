@@ -1,10 +1,10 @@
 from database import get_db_connection
 
-def get_all_inventario():
+def get_all_produccion():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM inventario")
+    cursor.execute("SELECT * FROM produccion")
     data = cursor.fetchall()
 
     cursor.close()
@@ -13,13 +13,13 @@ def get_all_inventario():
     return data
 
 
-def create_item(nombre, cantidad, unidad):
+def create_produccion(cultivo_id, cantidad, fecha):
     conn = get_db_connection()
     cursor = conn.cursor()
 
     cursor.execute(
-        "INSERT INTO inventario (nombre, cantidad, unidad) VALUES (%s, %s, %s)",
-        (nombre, cantidad, unidad)
+        "INSERT INTO produccion (cultivo_id, cantidad, fecha) VALUES (%s, %s, %s)",
+        (cultivo_id, cantidad, fecha)
     )
 
     conn.commit()

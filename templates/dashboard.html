@@ -4,47 +4,40 @@
 
 {% block content %}
 
-<div class="topbar">
-    <h1>AgroGestión</h1>
-</div>
+<h2>Bienvenido, {{ session.get('username') }}</h2>
 
-<div class="panel">
+<div class="tarjetas">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <ul>
-            <li><a href="#">Usuarios</a></li>
-            <li><a href="#">Inventario</a></li>
-            <li><a href="#">Reportes</a></li>
-        </ul>
+    <div class="card">
+        <img src="{{ url_for('static', filename='img/user.png') }}">
+        <p>Usuarios</p>
+        <a href="{{ url_for('usuario.listar') }}">
+            <button>Ir</button>
+        </a>
     </div>
 
-    <!-- CONTENIDO -->
-    <div class="contenido">
+    <div class="card">
+        <img src="{{ url_for('static', filename='img/cultivo.png') }}">
+        <p>Cultivos</p>
+        <a href="#">
+            <button>Ir</button>
+        </a>
+    </div>
 
-        <h2 class="mb-4">Bienvenido, {{ session['usuario'] }}</h2>
+    <div class="card">
+        <img src="{{ url_for('static', filename='img/inventario.png') }}">
+        <p>Inventario</p>
+        <a href="#">
+            <button>Ir</button>
+        </a>
+    </div>
 
-        {% if session['rol'] == 'admin' %}
-        <div class="mb-4">
-            <a href="/register" class="btn btn-success">
-                + Crear Usuario
-            </a>
-        </div>
-        {% endif %}
-
-        <div class="tarjetas">
-
-            <div class="card">
-                <img src="{{ url_for('static', filename='img/user.png') }}">
-                <p>Gestión de Usuarios</p>
-            </div>
-
-        </div>
-
-        <div class="mt-4">
-            <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
-        </div>
-
+    <div class="card">
+        <img src="{{ url_for('static', filename='img/actividad.png') }}">
+        <p>Actividades</p>
+        <a href="#">
+            <button>Ir</button>
+        </a>
     </div>
 
 </div>

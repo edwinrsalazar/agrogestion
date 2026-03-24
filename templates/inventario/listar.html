@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Inventario</h2>
+
+<a href="/crear_item">Nuevo Item</a>
+<a href="/inventario/editar/{{ item.id }}">✏️</a>
+<a href="/inventario/eliminar/{{ item.id }}" onclick="return confirm('¿Seguro?')">🗑️</a>
+
+<table border="1">
+<tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Cantidad</th>
+    <th>Unidad</th>
+</tr>
+
+{% for i in inventario %}
+<tr>
+    <td>{{ i.id }}</td>
+    <td>{{ i.nombre }}</td>
+    <td>{{ i.cantidad }}</td>
+    <td>{{ i.unidad }}</td>
+</tr>
+{% endfor %}
+
+</table>
+{% endblock %}
