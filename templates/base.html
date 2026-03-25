@@ -25,9 +25,9 @@
         <ul>
             <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
             <li><a href="{{ url_for('usuario.listar') }}">Usuarios</a></li>
-            <li><a href="#">Cultivos</a></li>
-            <li><a href="#">Inventario</a></li>
-            <li><a href="#">Actividades</a></li>
+            <li><a href="{{ url_for('cultivo.listar')}}">Cultivos</a></li>
+            <li><a href="{{ url_for('inventario.listar')}}">Inventario</a></li>
+            <li><a href="{{ url_for('actividades.listar')}}">Actividades</a></li>
             <li><a href="#">Producción</a></li>
             <li><a href="{{ url_for('auth.logout') }}">Cerrar sesión</a></li>
         </ul>

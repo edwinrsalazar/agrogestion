@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Producción{% endblock %}
+
+{% block content %}
+<h1>Editar producto</h1>
+
+<form method="POST">
+    Nombre: <input type="text" name="nombre" value="{{ inventario.nombre }}"><br>
+    Cantidad: <input type="number" name="cantidad" value="{{ inventario.cantidad }}"><br>
+    Precio: <input type="number" step="0.01" name="precio" value="{{ inventario.precio }}"><br>
+
+    <button type="submit">Actualizar</button>
+</form>
+{% endblock %}

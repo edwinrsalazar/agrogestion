@@ -1,28 +1,91 @@
-from flask import Blueprint, render_template, request, redirect, session
-from services.inventario_service import listar_inventario, crear_item
+from flask import Blueprint, render_template, request, redirect, url_for
+from database import get_db_connection
 
-inventario_bp = Blueprint('inventario', __name__)
+inventario_bp = Blueprint('inventario', __name__, url_prefix='/inventario')
 
-@inventario_bp.route('/inventario')
-def inventario():
-    if 'usuario' not in session:
-        return redirect('/')
+# LISTAR
+@inventario_bp.route('/')
+def listar():
+    conexion = get_db_connection()
+    cursor = conexion.cursor(dictionary=True)
 
-    data = listar_inventario()
-    return render_template('inventario/listar.html', inventario=data)
+    cursor.execute("SELECT * FROM inventario")
+    inventarios = cursor.fetchall()
+
+    cursor.close()
+    conexion.close()
+
+    return render_template('inventario/listar.html', inventarios=inventarios)
 
 
-@inventario_bp.route('/crear_item', methods=['GET', 'POST'])
-def crear_item_view():
-    if 'usuario' not in session:
-        return redirect('/')
+# CREAR
+@inventario_bp.route('/crear', methods=['GET', 'POST'])
+def crear():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        cantidad = request.form['cantidad']
+        unidad = request.form['unidad']
+        precio = request.form['precio']
+
+        conexion = get_db_connection()
+        cursor = conexion.cursor()
+
+        cursor.execute("""
+            INSERT INTO inventario (nombre, cantidad, unidad, precio)
+            VALUES (%s, %s, %s, %s)
+        """, (nombre, cantidad, unidad, precio))
+
+        conexion.commit()
+        cursor.close()
+        conexion.close()
+
+        return redirect(url_for('inventario.listar'))
+
+    return render_template('inventario/crear.html')
+
+
+# EDITAR
+@inventario_bp.route('/editar/<int:id>', methods=['GET', 'POST'])
+def editar(id):
+    conexion = get_db_connection()
+    cursor = conexion.cursor(dictionary=True)
 
     if request.method == 'POST':
         nombre = request.form['nombre']
-        cantidad = int(request.form['cantidad'])
-        unidad = request.form['unidad']
+        cantidad = request.form['cantidad']
+        precio = request.form['precio']
 
-        crear_item(nombre, cantidad, unidad)
-        return redirect('/inventario')
+        cursor.execute("""
+            UPDATE inventario
+            SET nombre=%s, cantidad=%s, precio=%s
+            WHERE id=%s
+        """, (nombre, cantidad, precio, id))
 
-    return render_template('inventario/crear.html')
+        conexion.commit()
+        cursor.close()
+        conexion.close()
+
+        return redirect(url_for('inventario.listar'))
+
+    cursor.execute("SELECT * FROM inventario WHERE id=%s", (id,))
+    inventario = cursor.fetchone()
+
+    cursor.close()
+    conexion.close()
+
+    return render_template('inventario/editar.html', inventario=inventario)
+
+
+# ELIMINAR
+@inventario_bp.route('/eliminar/<int:id>')
+def eliminar(id):
+    conexion = get_db_connection()
+    cursor = conexion.cursor()
+
+    cursor.execute("DELETE FROM inventario WHERE id=%s", (id,))
+    conexion.commit()
+
+    cursor.close()
+    conexion.close()
+
+    return redirect(url_for('inventario.listar'))

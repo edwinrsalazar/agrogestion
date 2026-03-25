@@ -1,21 +1,30 @@
 {% extends "base.html" %}
 
-{% block title %}Editar Actividad{% endblock %}
-
 {% block content %}
 <h2>Editar Actividad</h2>
 
 <form method="POST">
-    <input type="hidden" name="id" value="{{ actividad.id }}">
 
-    <label>Nombre:</label>
-    <input type="text" name="nombre" value="{{ actividad.nombre }}" required>
+    <label>Descripción:</label>
+    <input type="text" name="descripcion" value="{{ actividad.descripcion }}" required><br>
 
     <label>Fecha:</label>
-    <input type="date" name="fecha" value="{{ actividad.fecha }}" required>
+    <input type="date" name="fecha" value="{{ actividad.fecha }}" required><br>
+
+    <label>Cultivo:</label>
+    <select name="id_cultivo" required>
+        <option value="" disabled>Seleccione un cultivo</option>
+        {% for c in cultivos %}
+            <option value="{{ c.id_cultivos }}"
+                {% if c.id_cultivos == actividad.id_cultivo %}selected{% endif %}>
+                {{ c.nombre }}
+            </option>
+        {% endfor %}
+    </select><br>
 
     <button type="submit">Actualizar</button>
+
 </form>
 
-<a href="/actividades">⬅ Volver</a>
+<a href="{{ url_for('actividades.listar') }}">⬅ Volver</a>
 {% endblock %}

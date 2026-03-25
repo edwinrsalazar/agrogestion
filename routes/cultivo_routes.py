@@ -1,41 +1,52 @@
-from flask import Blueprint, render_template, request, redirect, session
+from flask import Blueprint, render_template, request, redirect, url_for, session
+from functools import wraps
+
 from services.cultivo_service import (
     listar_cultivos, crear_cultivo,
     obtener_cultivo, actualizar_cultivo, eliminar_cultivo
 )
 
-cultivo_bp = Blueprint('cultivo', __name__)
+# Blueprint con prefijo correcto
+cultivo_bp = Blueprint('cultivo', __name__, url_prefix='/cultivos')
 
-@cultivo_bp.route('/cultivos')
-def cultivos():
-    if 'usuario' not in session:
-        return redirect('/')
 
+# 🔐 Decorador reutilizable
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            return redirect(url_for('auth.login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+# 📋 LISTAR
+@cultivo_bp.route('/')
+@login_required
+def listar():
     data = listar_cultivos()
     return render_template('cultivos/listar.html', cultivos=data)
 
 
-@cultivo_bp.route('/cultivos/crear', methods=['GET', 'POST'])
-def crear_cultivo_view():
-    if 'usuario' not in session:
-        return redirect('/')
-
+# ➕ CREAR
+@cultivo_bp.route('/crear', methods=['GET', 'POST'])
+@login_required
+def crear():
     if request.method == 'POST':
         crear_cultivo(
             request.form['nombre'],
             request.form['tipo'],
-            request.form['ubicacion']
+            request.form['tiempo_cosecha_dias']
         )
-        return redirect('/cultivos')
+        return redirect(url_for('cultivo.listar'))
 
     return render_template('cultivos/crear.html')
 
 
-@cultivo_bp.route('/cultivos/editar/<int:id>', methods=['GET', 'POST'])
-def editar_cultivo(id):
-    if 'usuario' not in session:
-        return redirect('/')
-
+# ✏️ EDITAR
+@cultivo_bp.route('/editar/<int:id>', methods=['GET', 'POST'])
+@login_required
+def editar(id):
     cultivo = obtener_cultivo(id)
 
     if request.method == 'POST':
@@ -43,17 +54,16 @@ def editar_cultivo(id):
             id,
             request.form['nombre'],
             request.form['tipo'],
-            request.form['ubicacion']
+            request.form['tiempo_cosecha_dias']
         )
-        return redirect('/cultivos')
+        return redirect(url_for('cultivo.listar'))
 
     return render_template('cultivos/editar.html', cultivo=cultivo)
 
 
-@cultivo_bp.route('/cultivos/eliminar/<int:id>')
-def eliminar_cultivo_view(id):
-    if 'usuario' not in session:
-        return redirect('/')
-
+# ❌ ELIMINAR
+@cultivo_bp.route('/eliminar/<int:id>')
+@login_required
+def eliminar(id):
     eliminar_cultivo(id)
-    return redirect('/cultivos')
+    return redirect(url_for('cultivo.listar'))

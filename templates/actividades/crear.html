@@ -4,10 +4,22 @@
 <h2>Nueva Actividad</h2>
 
 <form method="POST">
-    <input name="tipo" placeholder="Tipo (riego, fertilización)">
-    <input type="date" name="fecha">
 
-    <button>Guardar</button>
+    <label>Descripción:</label>
+    <input type="text" name="descripcion"><br>
+
+    <label>Fecha:</label>
+    <input type="date" name="fecha"><br>
+
+    <label>Cultivo:</label>
+    <select name="id_cultivo" required>
+    <option value="" disabled selected>-- Seleccione un cultivo --</option>
+    {% for c in cultivos %}
+        <option value="{{ c.id_cultivos }}">{{ c.nombre }}</option>
+    {% endfor %}
+</select>
+
+    <button type="submit">Guardar</button>
+
 </form>
-
 {% endblock %}

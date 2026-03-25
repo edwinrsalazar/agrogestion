@@ -1,26 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Inventario</h2>
+<h2>Producción</h2>
 
-<a href="/crear_item">Nuevo Item</a>
-<a href="/inventario/editar/{{ item.id }}">✏️</a>
-<a href="/inventario/eliminar/{{ item.id }}" onclick="return confirm('¿Seguro?')">🗑️</a>
+<a href="{{ url_for('inventario.crear') }}">Registrar Producción</a>
 
 <table border="1">
 <tr>
     <th>ID</th>
-    <th>Nombre</th>
+    <th>Cultivo</th>
     <th>Cantidad</th>
-    <th>Unidad</th>
+    <th>Fecha</th>
+    <th>Acciones</th>
 </tr>
 
-{% for i in inventario %}
+{% for p in inventarios %}
 <tr>
-    <td>{{ i.id }}</td>
-    <td>{{ i.nombre }}</td>
-    <td>{{ i.cantidad }}</td>
-    <td>{{ i.unidad }}</td>
+    <td>{{ p.id }}</td>
+    <td>{{ p.cultivo_id }}</td>
+    <td>{{ p.cantidad }}</td>
+    <td>{{ p.fecha }}</td>
+    <td>
+        <a href="{{ url_for('inventario.editar', id=p.id) }}">✏️</a>
+        <a href="{{ url_for('inventario.eliminar', id=p.id) }}" onclick="return confirm('¿Seguro?')">🗑️</a>
+    </td>
 </tr>
 {% endfor %}
 

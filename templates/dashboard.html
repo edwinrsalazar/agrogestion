@@ -4,40 +4,99 @@
 
 {% block content %}
 
-<h2>Bienvenido, {{ session.get('username') }}</h2>
+<style>
+.tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+.card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card .numero {
+    font-size: 22px;
+    font-weight: bold;
+    color: #28a745;
+    margin: 5px 0;
+}
+</style>
+
+<h2>Bienvenido, {{ session.get('username') }} 👋</h2>
 
 <div class="tarjetas">
 
+    <!-- USUARIOS -->
     <div class="card">
-        <img src="{{ url_for('static', filename='img/user.png') }}">
-        <p>Usuarios</p>
-        <a href="{{ url_for('usuario.listar') }}">
-            <button>Ir</button>
-        </a>
+        <img src="{{ url_for('static', filename='img/empleado.jpg') }}">
+        <div class="card-content">
+            <h3>Usuarios</h3>
+            <div class="numero">{{ usuarios }}</div>
+            <p>Total registrados</p>
+            <a href="{{ url_for('usuario.listar') }}">
+                <button>Ver módulo</button>
+            </a>
+        </div>
     </div>
 
+    <!-- CULTIVOS -->
     <div class="card">
-        <img src="{{ url_for('static', filename='img/cultivo.png') }}">
-        <p>Cultivos</p>
-        <a href="#">
-            <button>Ir</button>
-        </a>
+        <img src="{{ url_for('static', filename='img/cultivos.jpg') }}">
+        <div class="card-content">
+            <h3>Cultivos</h3>
+            <div class="numero">{{ cultivos }}</div>
+            <p>Total cultivados</p>
+            <a href="{{ url_for('cultivo.listar') }}">
+                <button>Ver módulo</button>
+            </a>
+        </div>
     </div>
 
+    <!-- INVENTARIO (TOTAL CANTIDAD) -->
     <div class="card">
-        <img src="{{ url_for('static', filename='img/inventario.png') }}">
-        <p>Inventario</p>
-        <a href="#">
-            <button>Ir</button>
-        </a>
+        <img src="{{ url_for('static', filename='img/reporte.jpg') }}">
+        <div class="card-content">
+            <h3>Inventario</h3>
+            <div class="numero">{{ total_cantidad }}</div>
+            <p>Total en stock</p>
+            <a href="{{ url_for('inventario.listar') }}">
+                <button>Ver módulo</button>
+            </a>
+        </div>
     </div>
 
+    <!-- PRODUCTOS -->
     <div class="card">
-        <img src="{{ url_for('static', filename='img/actividad.png') }}">
-        <p>Actividades</p>
-        <a href="#">
-            <button>Ir</button>
-        </a>
+        <img src="{{ url_for('static', filename='img/reporte.jpg') }}">
+        <div class="card-content">
+            <h3>Productos</h3>
+            <div class="numero">{{ total_productos }}</div>
+            <p>Tipos registrados</p>
+            <a href="{{ url_for('inventario.listar') }}">
+                <button>Ver módulo</button>
+            </a>
+        </div>
     </div>
 
 </div>

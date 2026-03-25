@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, session
 from services.produccion_service import listar_produccion, crear_produccion
 
-produccion_bp = Blueprint('produccion', __name__)
+produccion_bp = Blueprint('produccion', __name__, url_prefix='/produccion')
 
 @produccion_bp.route('/produccion')
 def produccion():

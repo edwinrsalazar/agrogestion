@@ -1,4 +1,4 @@
-from models.actividad_model import get_all_actividades, create_actividad
+from models.actividades_model import get_all_actividades, create_actividad
 
 def listar_actividades():
     return get_all_actividades()

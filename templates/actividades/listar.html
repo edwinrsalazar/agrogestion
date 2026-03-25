@@ -3,21 +3,35 @@
 {% block content %}
 <h2>Actividades</h2>
 
-<a href="/actividades/crear">Registrar actividad</a>
+<a href="{{ url_for('actividades.crear') }}">Nueva actividad</a>
 
-<ul>
+<table border="1">
+<tr>
+    <th>ID</th>
+    <th>Descripción</th>
+    <th>Fecha</th>
+    <th>Cultivo</th>
+    <th>Acciones</th>
+</tr>
+
 {% for a in actividades %}
-    <li>{{ a.tipo }} - {{ a.fecha }}</li>
+<tr>
+    <td>{{ a.id }}</td>
+    <td>{{ a.descripcion }}</td>
+    <td>{{ a.fecha }}</td>
+    <td>{{ a.cultivo }}</td>
+    <td>
+        <!-- ✏️ EDITAR -->
+        <a href="{{ url_for('actividades.editar', id=a.id) }}">✏️</a>
+
+        <!-- 🗑️ ELIMINAR -->
+        <a href="{{ url_for('actividades.eliminar', id=a.id) }}"
+           onclick="return confirm('¿Seguro que deseas eliminar?')">
+           🗑️
+        </a>
+    </td>
+</tr>
 {% endfor %}
-</ul>
 
-<td>
-    <a href="/actividades/editar/{{ actividad.id }}">✏️ Editar</a>
-
-    <a href="/actividades/eliminar/{{ actividad.id }}"
-       onclick="return confirm('¿Seguro que deseas eliminar?')">
-       🗑️ Eliminar
-    </a>
-</td>
-
+</table>
 {% endblock %}
