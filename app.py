@@ -8,6 +8,7 @@ from routes.usuario_routes import usuario_bp
 from routes.cultivo_routes import cultivo_bp
 from routes.inventario_routes import inventario_bp
 from routes.actividades_routes import actividad_bp
+from routes.produccion_routes import produccion_bp
 
 # IMPORTAR MODELOS (IMPORTANTE 🔥)
 from models.inventario_model import get_total_productos, get_total_cantidad
@@ -25,6 +26,7 @@ app.register_blueprint(usuario_bp)
 app.register_blueprint(cultivo_bp)
 app.register_blueprint(inventario_bp)
 app.register_blueprint(actividad_bp)
+app.register_blueprint(produccion_bp)
 
 
 # 🔐 DECORADOR GLOBAL

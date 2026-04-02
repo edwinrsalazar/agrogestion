@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}AgroGestión{% endblock %}</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 </head>
 <body>
 
@@ -14,30 +14,31 @@
 </video>
 
 <!-- HEADER -->
-<header class="H1">
-    <h1>AGROGESTIÓN</h1>
+<header class="topbar">
+    <h1>🌱 AGROGESTIÓN</h1>
 </header>
 
 <div class="panel">
 
     <!-- SIDEBAR -->
-    <div class="sidebar">
+    <aside class="sidebar">
         <ul>
             <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
             <li><a href="{{ url_for('usuario.listar') }}">Usuarios</a></li>
             <li><a href="{{ url_for('cultivo.listar')}}">Cultivos</a></li>
             <li><a href="{{ url_for('inventario.listar')}}">Inventario</a></li>
             <li><a href="{{ url_for('actividades.listar')}}">Actividades</a></li>
-            <li><a href="#">Producción</a></li>
+            <li><a href="{{ url_for('produccion.listar') }}">Producción</a></li>
             <li><a href="{{ url_for('auth.logout') }}">Cerrar sesión</a></li>
         </ul>
-    </div>
+    </aside>
 
     <!-- CONTENIDO -->
-    <div class="contenido">
-        {% block content %}
-        {% endblock %}
-    </div>
+    <main class="contenido">
+        <div class="contenedor-blanco">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
 
 </div>
 

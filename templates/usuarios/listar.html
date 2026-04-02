@@ -4,34 +4,143 @@
 
 {% block content %}
 
-<h2>Gestión de Usuarios</h2>
+<style>
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
 
-{% if session.get('rol') == 'admin' %}
-<a href="{{ url_for('usuario.crear') }}">
-    <button>+ Crear Usuario</button>
-</a>
-{% endif %}
+.grid-usuarios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
 
-<div class="tarjetas">
+.usuario-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+    transition: 0.3s;
+    position: relative;
+}
+
+.usuario-card:hover {
+    transform: translateY(-5px);
+}
+
+.usuario-nombre {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+.usuario-info {
+    font-size: 14px;
+    margin-top: 8px;
+    color: #555;
+}
+
+.rol {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: white;
+}
+
+.admin {
+    background-color: #d32f2f;
+}
+
+.usuario {
+    background-color: #1976d2;
+}
+
+.acciones {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+.btn-editar {
+    background: #f9a825;
+}
+
+.btn-eliminar {
+    background: #c62828;
+}
+
+.btn-crear {
+    background: #2e7d32;
+    padding: 10px 15px;
+    border-radius: 6px;
+    color: white;
+    text-decoration: none;
+}
+</style>
+
+<div class="header">
+    <h2>👤 Gestión de Usuarios</h2>
+
+    {% if session.get('rol') == 'admin' %}
+    <a href="{{ url_for('usuario.crear') }}" class="btn-crear">
+        ➕ Nuevo Usuario
+    </a>
+    {% endif %}
+</div>
+
+<div class="grid-usuarios">
 
     {% for u in usuarios %}
-    <div class="card">
-        <p><strong>Nombre:</strong> {{ u.nombre }}</p>
-        <p><strong>Documento:</strong> {{ u.documento }}</p>
-        <p><strong>Correo:</strong> {{ u.correo }}</p>
-        <p><strong>Teléfono:</strong> {{ u.telefono }}</p>
+    <div class="usuario-card">
 
+        <!-- ROL -->
+        <div class="rol {{ u.rol }}">
+            {{ u.rol }}
+        </div>
+
+        <!-- INFO -->
+        <div class="usuario-nombre">
+            {{ u.nombre }}
+        </div>
+
+        <div class="usuario-info">
+            📄 Documento: {{ u.documento }}
+        </div>
+
+        <div class="usuario-info">
+            📧 {{ u.correo }}
+        </div>
+
+        <div class="usuario-info">
+            📱 {{ u.telefono }}
+        </div>
+
+        <!-- ACCIONES -->
         {% if session.get('rol') == 'admin' %}
+        <div class="acciones">
+            <a href="{{ url_for('usuario.editar', id=u.id_usuarios) }}">
+                <button class="btn btn-editar">✏️ Editar</button>
+            </a>
 
-        <a href="{{ url_for('usuario.editar', id=u.id_usuarios) }}">
-            <button>Editar</button>
-        </a>
-
-        <a href="{{ url_for('usuario.eliminar', id=u.id_usuarios) }}" 
-           onclick="return confirm('¿Seguro que quieres eliminar este usuario?')">
-            <button style="background-color:red;">Eliminar</button>
-        </a>
-
+            <a href="{{ url_for('usuario.eliminar', id=u.id_usuarios) }}"
+               onclick="return confirm('¿Eliminar usuario?')">
+                <button class="btn btn-eliminar">🗑️ Eliminar</button>
+            </a>
+        </div>
         {% endif %}
 
     </div>

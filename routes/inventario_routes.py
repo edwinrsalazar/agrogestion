@@ -22,10 +22,14 @@ def listar():
 @inventario_bp.route('/crear', methods=['GET', 'POST'])
 def crear():
     if request.method == 'POST':
-        nombre = request.form['nombre']
-        cantidad = request.form['cantidad']
-        unidad = request.form['unidad']
-        precio = request.form['precio']
+        nombre = request.form.get('nombre')
+        cantidad = request.form.get('cantidad')
+        unidad = request.form.get('unidad')
+        precio = request.form.get('precio')
+
+        # ✅ VALIDACIÓN
+        if not nombre or not cantidad or not unidad or not precio:
+            return "Todos los campos son obligatorios"
 
         conexion = get_db_connection()
         cursor = conexion.cursor()
@@ -51,15 +55,19 @@ def editar(id):
     cursor = conexion.cursor(dictionary=True)
 
     if request.method == 'POST':
-        nombre = request.form['nombre']
-        cantidad = request.form['cantidad']
-        precio = request.form['precio']
+        nombre = request.form.get('nombre')
+        cantidad = request.form.get('cantidad')
+        unidad = request.form.get('unidad')
+        precio = request.form.get('precio')
+
+        if not nombre or not cantidad or not unidad or not precio:
+            return "Todos los campos son obligatorios"
 
         cursor.execute("""
             UPDATE inventario
-            SET nombre=%s, cantidad=%s, precio=%s
+            SET nombre=%s, cantidad=%s, unidad=%s, precio=%s
             WHERE id=%s
-        """, (nombre, cantidad, precio, id))
+        """, (nombre, cantidad, unidad, precio, id))
 
         conexion.commit()
         cursor.close()

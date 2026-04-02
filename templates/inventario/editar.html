@@ -1,15 +1,38 @@
 {% extends "base.html" %}
 
-{% block title %}Editar Producción{% endblock %}
-
 {% block content %}
-<h1>Editar producto</h1>
+<div class="card shadow">
+    <div class="card-body">
 
-<form method="POST">
-    Nombre: <input type="text" name="nombre" value="{{ inventario.nombre }}"><br>
-    Cantidad: <input type="number" name="cantidad" value="{{ inventario.cantidad }}"><br>
-    Precio: <input type="number" step="0.01" name="precio" value="{{ inventario.precio }}"><br>
+        <h3 class="mb-4">Editar Producto</h3>
 
-    <button type="submit">Actualizar</button>
-</form>
+        <form method="POST">
+
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" name="nombre" value="{{ inventario.nombre }}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Cantidad</label>
+                <input type="number" name="cantidad" value="{{ inventario.cantidad }}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Unidad</label>
+                <input type="text" name="unidad" value="{{ inventario.unidad }}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Precio</label>
+                <input type="number" step="0.01" name="precio" value="{{ inventario.precio }}" class="form-control" required>
+            </div>
+
+            <button class="btn btn-primary">Actualizar</button>
+            <a href="{{ url_for('inventario.listar') }}" class="btn btn-secondary">Cancelar</a>
+
+        </form>
+
+    </div>
+</div>
 {% endblock %}

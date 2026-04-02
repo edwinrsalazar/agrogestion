@@ -4,37 +4,111 @@
 
 {% block content %}
 
-<div class="login-container">
+<style>
+
+.form-container {
+    width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    color: white;
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+button {
+    padding: 12px;
+    background-color: #00c853;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #00b248;
+}
+
+</style>
+
+<div class="form-container">
 
     <h2>Crear Usuario</h2>
 
-    <form method="POST">
+    <form method="POST" class="form-grid">
 
-        <label>Nombre</label>
-        <input type="text" name="nombre" required>
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" name="nombre" required>
+        </div>
 
-        <label>Documento</label>
-        <input type="text" name="documento" required>
+        <div class="form-group">
+            <label>Documento</label>
+            <input type="text" name="documento" required>
+        </div>
 
-        <label>Teléfono</label>
-        <input type="text" name="telefono">
+        <div class="form-group">
+            <label>Teléfono</label>
+            <input type="text" name="telefono">
+        </div>
 
-        <label>Correo</label>
-        <input type="email" name="correo">
+        <div class="form-group">
+            <label>Correo</label>
+            <input type="email" name="correo">
+        </div>
 
-        <label>Usuario</label>
-        <input type="text" name="username" required>
+        <div class="form-group">
+            <label>Usuario</label>
+            <input type="text" name="username" required>
+        </div>
 
-        <label>Contraseña</label>
-        <input type="password" name="password" required>
+        <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" name="password" required>
+        </div>
 
-        <label>Rol</label>
-        <select name="rol">
-            <option value="admin">Admin</option>
-            <option value="usuario">Usuario</option>
-        </select>
+        <div class="form-group full-width">
+            <label>Rol</label>
+            <select name="rol">
+                <option value="admin">Admin</option>
+                <option value="usuario">Usuario</option>
+            </select>
+        </div>
 
-        <button type="submit">Crear Usuario</button>
+        <div class="form-group full-width">
+            <button type="submit">Crear Usuario</button>
+        </div>
 
     </form>
 

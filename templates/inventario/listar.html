@@ -1,31 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Producción</h2>
+<h2>Inventario</h2>
 
-<a href="{{ url_for('inventario.crear') }}">Registrar Producción</a>
+<a href="{{ url_for('inventario.crear') }}" class="btn btn-crear">
+    ➕ Nuevo Producto
+</a>
 
-<table border="1">
-<tr>
-    <th>ID</th>
-    <th>Cultivo</th>
-    <th>Cantidad</th>
-    <th>Fecha</th>
-    <th>Acciones</th>
-</tr>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Unidad</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
 
-{% for p in inventarios %}
-<tr>
-    <td>{{ p.id }}</td>
-    <td>{{ p.cultivo_id }}</td>
-    <td>{{ p.cantidad }}</td>
-    <td>{{ p.fecha }}</td>
-    <td>
-        <a href="{{ url_for('inventario.editar', id=p.id) }}">✏️</a>
-        <a href="{{ url_for('inventario.eliminar', id=p.id) }}" onclick="return confirm('¿Seguro?')">🗑️</a>
-    </td>
-</tr>
-{% endfor %}
-
+    <tbody>
+        {% for inv in inventarios %}
+        <tr>
+            <td>{{ inv.id }}</td>
+            <td>{{ inv.nombre }}</td>
+            <td>{{ inv.cantidad }}</td>
+            <td>{{ inv.unidad }}</td>
+            <td>${{ inv.precio }}</td>
+            <td>
+                <a href="{{ url_for('inventario.editar', id=inv.id) }}" class="btn btn-editar">✏️</a>
+                <a href="{{ url_for('inventario.eliminar', id=inv.id) }}" class="btn btn-eliminar"
+                   onclick="return confirm('¿Eliminar?')">🗑️</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+
+    </div>
+</div>
+
 {% endblock %}
