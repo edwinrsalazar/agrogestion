@@ -15,7 +15,15 @@
 
 <!-- HEADER -->
 <header class="topbar">
-    <h1>🌱 AGROGESTIÓN</h1>
+
+    <div class="left"></div>
+
+    <h1 class="titulo">AGROGESTIÓN</h1>
+
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='img/logho.png') }}" alt="Logo">
+    </div>
+
 </header>
 
 <div class="panel">
@@ -23,13 +31,22 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <ul>
-            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-            <li><a href="{{ url_for('usuario.listar') }}">Usuarios</a></li>
+
+            <li><a href="{{ url_for('dashboard') }}">Inicio</a></li>
+
+            <!-- 🔥 SOLO ADMIN -->
+            {% if session.get('rol') == 'admin' %}
+                <li><a href="{{ url_for('usuario.listar') }}">Usuarios</a></li>
+                <li><a href="{{ url_for('inventario.listar')}}">Inventario</a></li>
+                <li><a href="{{ url_for('produccion.listar') }}">Producción</a></li>
+            {% endif %}
+
+            <!-- 🔥 AMBOS ROLES -->
             <li><a href="{{ url_for('cultivo.listar')}}">Cultivos</a></li>
-            <li><a href="{{ url_for('inventario.listar')}}">Inventario</a></li>
             <li><a href="{{ url_for('actividades.listar')}}">Actividades</a></li>
-            <li><a href="{{ url_for('produccion.listar') }}">Producción</a></li>
+
             <li><a href="{{ url_for('auth.logout') }}">Cerrar sesión</a></li>
+
         </ul>
     </aside>
 
@@ -41,6 +58,11 @@
     </main>
 
 </div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p>© 2026 AgroGestión | Proyecto SENA</p>
+</footer>
 
 </body>
 </html>

@@ -1,38 +1,102 @@
 {% extends "base.html" %}
 
+{% block title %}Editar Producto{% endblock %}
+
 {% block content %}
-<div class="card shadow">
-    <div class="card-body">
 
-        <h3 class="mb-4">Editar Producto</h3>
+<style>
+.form-container {
+    width: 500px;
+    margin: 60px auto;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+}
 
-        <form method="POST">
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-            <div class="mb-3">
-                <label class="form-label">Nombre</label>
-                <input type="text" name="nombre" value="{{ inventario.nombre }}" class="form-control" required>
-            </div>
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
 
-            <div class="mb-3">
-                <label class="form-label">Cantidad</label>
-                <input type="number" name="cantidad" value="{{ inventario.cantidad }}" class="form-control" required>
-            </div>
+.form-group input {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+}
 
-            <div class="mb-3">
-                <label class="form-label">Unidad</label>
-                <input type="text" name="unidad" value="{{ inventario.unidad }}" class="form-control" required>
-            </div>
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
 
-            <div class="mb-3">
-                <label class="form-label">Precio</label>
-                <input type="number" step="0.01" name="precio" value="{{ inventario.precio }}" class="form-control" required>
-            </div>
+.btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
 
-            <button class="btn btn-primary">Actualizar</button>
-            <a href="{{ url_for('inventario.listar') }}" class="btn btn-secondary">Cancelar</a>
+.btn-actualizar {
+    background-color: #f9a825;
+}
 
-        </form>
+.btn-actualizar:hover {
+    background-color: #f57f17;
+}
 
-    </div>
+.btn-cancelar {
+    background-color: #757575;
+    text-align: center;
+    text-decoration: none;
+    line-height: 38px;
+}
+</style>
+
+<div class="form-container">
+
+    <h2>✏️ Editar Producto</h2>
+
+    <form method="POST">
+
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" name="nombre" value="{{ inventario.nombre }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Cantidad</label>
+            <input type="number" name="cantidad" value="{{ inventario.cantidad }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Unidad</label>
+            <input type="text" name="unidad" value="{{ inventario.unidad }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Precio</label>
+            <input type="number" step="0.01" name="precio" value="{{ inventario.precio }}" required>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-actualizar">Actualizar</button>
+            <a href="{{ url_for('inventario.listar') }}" class="btn btn-cancelar">Cancelar</a>
+        </div>
+
+    </form>
+
 </div>
+
 {% endblock %}

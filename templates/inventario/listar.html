@@ -1,43 +1,50 @@
 {% extends "base.html" %}
+{% block title %}Inventario{% endblock %}
 
 {% block content %}
-<h2>Inventario</h2>
 
-<a href="{{ url_for('inventario.crear') }}" class="btn btn-crear">
-    ➕ Nuevo Producto
-</a>
+<div class="container">
 
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Cantidad</th>
-            <th>Unidad</th>
-            <th>Precio</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        {% for inv in inventarios %}
-        <tr>
-            <td>{{ inv.id }}</td>
-            <td>{{ inv.nombre }}</td>
-            <td>{{ inv.cantidad }}</td>
-            <td>{{ inv.unidad }}</td>
-            <td>${{ inv.precio }}</td>
-            <td>
-                <a href="{{ url_for('inventario.editar', id=inv.id) }}" class="btn btn-editar">✏️</a>
-                <a href="{{ url_for('inventario.eliminar', id=inv.id) }}" class="btn btn-eliminar"
-                   onclick="return confirm('¿Eliminar?')">🗑️</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+    <div class="header">
+        <h2>📦 Gestión de Inventario</h2>
+        <a href="{{ url_for('inventario.crear') }}" class="btn btn-crear">
+            ➕ Nuevo Producto
+        </a>
     </div>
+
+    {% if inventarios %}
+    <div class="tabla-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Unidad</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for inv in inventarios %}
+                <tr>
+                    <td>{{ inv.id }}</td>
+                    <td>{{ inv.nombre }}</td>
+                    <td>{{ inv.cantidad }}</td>
+                    <td>{{ inv.unidad }}</td>
+                    <td>${{ inv.precio }}</td>
+                    <td>
+                        <a href="{{ url_for('inventario.editar', id=inv.id) }}" class="btn btn-editar">✏️</a>
+                        <a href="{{ url_for('inventario.eliminar', id=inv.id) }}" class="btn btn-eliminar">🗑️</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
 </div>
 
 {% endblock %}

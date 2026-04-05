@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Panel del Empleado{% endblock %}
+
+{% block content %}
+
+<style>
+.dashboard {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.card {
+    width: 300px;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+    text-align: center;
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card h3 {
+    margin: 10px 0;
+}
+
+.numero {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+.card button {
+    margin: 15px;
+    padding: 10px 15px;
+    border: none;
+    background: #2e7d32;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+</style>
+
+<h2>👨‍🌾 Panel del Empleado</h2>
+
+<div class="dashboard">
+
+    <!-- CULTIVOS -->
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef">
+        <h3>Cultivos</h3>
+        <div class="numero">{{ cultivos }}</div>
+        <p>Total registrados</p>
+        <a href="{{ url_for('cultivo.listar') }}">
+            <button>Ver módulo</button>
+        </a>
+    </div>
+
+    <!-- ACTIVIDADES -->
+    <div class="card">
+        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f">
+        <h3>Actividades</h3>
+        <div class="numero">{{ actividades }}</div>
+        <p>Registradas</p>
+        <a href="{{ url_for('actividades.listar') }}">
+            <button>Ver módulo</button>
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

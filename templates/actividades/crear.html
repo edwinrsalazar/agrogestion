@@ -1,25 +1,103 @@
 {% extends "base.html" %}
 
+{% block title %}Crear Actividad{% endblock %}
+
 {% block content %}
-<h2>Nueva Actividad</h2>
 
-<form method="POST">
+<style>
+.form-container {
+    width: 500px;
+    margin: 60px auto;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+}
 
-    <label>Descripción:</label>
-    <input type="text" name="descripcion"><br>
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-    <label>Fecha:</label>
-    <input type="date" name="fecha"><br>
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
 
-    <label>Cultivo:</label>
-    <select name="id_cultivo" required>
-    <option value="" disabled selected>-- Seleccione un cultivo --</option>
-    {% for c in cultivos %}
-        <option value="{{ c.id_cultivos }}">{{ c.nombre }}</option>
-    {% endfor %}
-</select>
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+}
 
-    <button type="submit">Guardar</button>
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
 
-</form>
+.btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-guardar {
+    background-color: #2e7d32;
+}
+
+.btn-guardar:hover {
+    background-color: #1b5e20;
+}
+
+.btn-cancelar {
+    background-color: #757575;
+    text-align: center;
+    text-decoration: none;
+    line-height: 38px;
+}
+</style>
+
+<div class="form-container">
+
+    <h2>📅 Nueva Actividad</h2>
+
+    <form method="POST">
+
+        <div class="form-group">
+            <label>Descripción</label>
+            <input type="text" name="descripcion" required>
+        </div>
+
+        <div class="form-group">
+            <label>Fecha</label>
+            <input type="date" name="fecha" required>
+        </div>
+
+        <div class="form-group">
+            <label>Cultivo</label>
+            <select name="id_cultivo" required>
+                <option value="" disabled selected>-- Seleccione un cultivo --</option>
+                {% for c in cultivos %}
+                    <option value="{{ c.id_cultivos }}">{{ c.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-guardar">Guardar</button>
+            <a href="{{ url_for('actividades.listar') }}" class="btn btn-cancelar">Cancelar</a>
+        </div>
+
+    </form>
+
+</div>
+
 {% endblock %}

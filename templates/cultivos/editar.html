@@ -1,13 +1,84 @@
 {% extends "base.html" %}
 
-{% block content %}
-<h2>Editar Cultivo</h2>
+{% block title %}Editar Cultivo{% endblock %}
 
-<form method="POST">
-    <input name="nombre" value="{{ cultivo.nombre }}" required>
-    <input name="tipo" value="{{ cultivo.tipo }}" required>
-    <input name="tiempo_cosecha_dias" value="{{ cultivo.tiempo_cosecha_dias }}" required>
-    <button type="submit">Actualizar</button>
-</form>
+{% block content %}
+
+<style>
+.form-container {
+    width: 500px;
+    margin: 60px auto;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.form-group input {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #f9a825;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #f57f17;
+}
+</style>
+
+<div class="form-container">
+
+    <h2>🌿 Editar Cultivo</h2>
+
+    <form method="POST">
+
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" name="nombre" value="{{ cultivo.nombre }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Tipo</label>
+            <input type="text" name="tipo" value="{{ cultivo.tipo }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Días de cosecha</label>
+            <input type="number" name="tiempo_cosecha_dias" value="{{ cultivo.tiempo_cosecha_dias }}" required>
+        </div>
+
+        <button type="submit">Actualizar Cultivo</button>
+
+    </form>
+
+</div>
 
 {% endblock %}

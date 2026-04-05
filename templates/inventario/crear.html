@@ -1,38 +1,106 @@
 {% extends "base.html" %}
 
+{% block title %}Crear Producto{% endblock %}
+
 {% block content %}
-<div class="card shadow">
-    <div class="card-body">
 
-        <h3 class="mb-4">Registrar Producto</h3>
+<style>
+.form-container {
+    width: 500px;
+    margin: 60px auto;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+}
 
-        <form method="POST">
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-            <div class="mb-3">
-                <label class="form-label">Nombre</label>
-                <input type="text" name="nombre" class="form-control" required>
-            </div>
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
 
-            <div class="mb-3">
-                <label class="form-label">Cantidad</label>
-                <input type="number" name="cantidad" class="form-control" required>
-            </div>
+.form-group label {
+    margin-bottom: 5px;
+}
 
-            <div class="mb-3">
-                <label class="form-label">Unidad</label>
-                <input type="text" name="unidad" class="form-control" placeholder="kg, unidades, litros..." required>
-            </div>
+.form-group input {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+}
 
-            <div class="mb-3">
-                <label class="form-label">Precio</label>
-                <input type="number" step="0.01" name="precio" class="form-control" required>
-            </div>
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
 
-            <button class="btn btn-success">Guardar</button>
-            <a href="{{ url_for('inventario.listar') }}" class="btn btn-secondary">Cancelar</a>
+.btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+}
 
-        </form>
+.btn-guardar {
+    background-color: #2e7d32;
+}
 
-    </div>
+.btn-guardar:hover {
+    background-color: #1b5e20;
+}
+
+.btn-cancelar {
+    background-color: #757575;
+    text-align: center;
+    text-decoration: none;
+    line-height: 38px;
+}
+</style>
+
+<div class="form-container">
+
+    <h2>📦 Registrar Producto</h2>
+
+    <form method="POST">
+
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" name="nombre" required>
+        </div>
+
+        <div class="form-group">
+            <label>Cantidad</label>
+            <input type="number" name="cantidad" required>
+        </div>
+
+        <div class="form-group">
+            <label>Unidad</label>
+            <input type="text" name="unidad" placeholder="kg, litros, unidades..." required>
+        </div>
+
+        <div class="form-group">
+            <label>Precio</label>
+            <input type="number" step="0.01" name="precio" required>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-guardar">Guardar</button>
+            <a href="{{ url_for('inventario.listar') }}" class="btn btn-cancelar">Cancelar</a>
+        </div>
+
+    </form>
+
 </div>
+
 {% endblock %}

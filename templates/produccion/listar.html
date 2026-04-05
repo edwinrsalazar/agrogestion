@@ -1,28 +1,48 @@
 {% extends "base.html" %}
+{% block title %}Producción{% endblock %}
 
 {% block content %}
-<h2>Producción</h2>
 
-<a href="/crear_produccion">Registrar Producción</a>
-<a href="/produccion/editar/{{ produccion.id }}">✏️</a>
-<a href="/produccion/eliminar/{{ produccion.id }}" onclick="return confirm('¿Seguro?')">🗑️</a>
+<div class="container">
 
-<table border="1">
-<tr>
-    <th>ID</th>
-    <th>Cultivo</th>
-    <th>Cantidad</th>
-    <th>Fecha</th>
-</tr>
+    <div class="header">
+        <h2>🌾 Gestión de Producción</h2>
+        <a href="{{ url_for('produccion.crear') }}" class="btn btn-crear">
+            ➕ Registrar Producción
+        </a>
+    </div>
 
-{% for p in produccion %}
-<tr>
-    <td>{{ p.id }}</td>
-    <td>{{ p.cultivo_id }}</td>
-    <td>{{ p.cantidad }}</td>
-    <td>{{ p.fecha }}</td>
-</tr>
-{% endfor %}
+    {% if produccion %}
+    <div class="tabla-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cultivo</th>
+                    <th>Cantidad</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
 
-</table>
+            <tbody>
+                {% for p in produccion %}
+                <tr>
+                    <td>{{ p.id }}</td>
+                    <td>{{ p.cultivo }}</td>
+                    <td>{{ p.cantidad }}</td>
+                    <td>{{ p.fecha }}</td>
+                    <td>
+                        <a href="{{ url_for('produccion.editar', id=p.id) }}" class="btn btn-editar">✏️</a>
+                        <a href="{{ url_for('produccion.eliminar', id=p.id) }}" class="btn btn-eliminar">🗑️</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+</div>
+
 {% endblock %}

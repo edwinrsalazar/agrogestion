@@ -3,19 +3,102 @@
 {% block title %}Editar Producción{% endblock %}
 
 {% block content %}
-<h2>Editar Producción</h2>
 
-<form method="POST">
-    <input type="hidden" name="id" value="{{ produccion.id }}">
+<style>
+.form-container {
+    width: 500px;
+    margin: 60px auto;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+}
 
-    <label>Cultivo:</label>
-    <input type="text" name="cultivo" value="{{ produccion.cultivo }}" required>
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-    <label>Cantidad:</label>
-    <input type="number" name="cantidad" value="{{ produccion.cantidad }}" required>
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
 
-    <button type="submit">Actualizar</button>
-</form>
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+}
 
-<a href="/produccion">⬅ Volver</a>
+.btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-actualizar {
+    background-color: #f9a825;
+}
+
+.btn-cancelar {
+    background-color: #757575;
+    text-align: center;
+    text-decoration: none;
+    line-height: 38px;
+}
+</style>
+
+<div class="form-container">
+
+    <h2>✏️ Editar Producción</h2>
+
+    <form method="POST">
+
+        <!-- CULTIVO -->
+        <div class="form-group">
+            <label>Cultivo</label>
+            <select name="cultivo_id" required>
+                {% for c in cultivos %}
+                    <option value="{{ c.id_cultivos }}"
+                        {% if c.id_cultivos == produccion.cultivo_id %}selected{% endif %}>
+                        {{ c.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- CANTIDAD -->
+        <div class="form-group">
+            <label>Cantidad</label>
+            <input type="number" name="cantidad" value="{{ produccion.cantidad }}" required>
+        </div>
+
+        <!-- FECHA -->
+        <div class="form-group">
+            <label>Fecha</label>
+            <input type="date" name="fecha" value="{{ produccion.fecha }}" required>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-actualizar">Actualizar</button>
+            <a href="{{ url_for('produccion.listar') }}" class="btn btn-cancelar">Cancelar</a>
+        </div>
+
+    </form>
+
+</div>
+
 {% endblock %}

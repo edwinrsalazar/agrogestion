@@ -65,3 +65,15 @@ def delete_cultivo(id):
 
     cursor.close()
     conn.close()
+
+def tiene_actividades(id):
+    conexion = get_db_connection()
+    cursor = conexion.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM actividades WHERE id_cultivo = %s", (id,))
+    resultado = cursor.fetchone()[0]
+
+    cursor.close()
+    conexion.close()
+
+    return resultado > 0

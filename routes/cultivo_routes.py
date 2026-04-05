@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from functools import wraps
 
 from services.cultivo_service import (
@@ -63,7 +63,10 @@ def editar(id):
 
 # ❌ ELIMINAR
 @cultivo_bp.route('/eliminar/<int:id>')
-@login_required
 def eliminar(id):
-    eliminar_cultivo(id)
+    resultado = eliminar_cultivo(id)
+
+    if not resultado:
+        flash("No puedes eliminar este cultivo porque tiene actividades asociadas", "error")
+
     return redirect(url_for('cultivo.listar'))

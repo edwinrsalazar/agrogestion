@@ -58,6 +58,10 @@ def dashboard():
     cursor.execute("SELECT COUNT(*) as total FROM produccion")
     produccion = cursor.fetchone()['total']
 
+    # 📋 ACTIVIDADES
+    cursor.execute("SELECT COUNT(*) as total FROM actividades")
+    actividades = cursor.fetchone()['total']
+
     cursor.close()
     conn.close()
 
@@ -73,7 +77,8 @@ def dashboard():
         usuarios=usuarios,
         produccion=produccion,
         total_productos=total_productos,
-        total_cantidad=total_cantidad
+        total_cantidad=total_cantidad,
+        actividades=actividades
     )
 
 

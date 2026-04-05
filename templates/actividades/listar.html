@@ -1,39 +1,48 @@
 {% extends "base.html" %}
+{% block title %}Actividades{% endblock %}
 
 {% block content %}
 
-<h2>Gestión de Actividades</h2>
+<div class="container">
 
-<a href="{{ url_for('actividades.crear') }}" class="btn btn-crear">
-    ➕ Nueva Actividad
-</a>
+    <div class="header">
+        <h2>📅 Gestión de Actividades</h2>
+        <a href="{{ url_for('actividades.crear') }}" class="btn btn-crear">
+            ➕ Nueva Actividad
+        </a>
+    </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Descripción</th>
-            <th>Fecha</th>
-            <th>Cultivo</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
+    {% if actividades %}
+    <div class="tabla-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Cultivo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
 
-    <tbody>
-        {% for a in actividades %}
-        <tr>
-            <td>{{ a.id }}</td>
-            <td>{{ a.descripcion }}</td>
-            <td>{{ a.fecha }}</td>
-            <td>{{ a.cultivo }}</td>
-            <td>
-                <a href="{{ url_for('actividades.editar', id=a.id) }}" class="btn btn-editar">✏️</a>
-                <a href="{{ url_for('actividades.eliminar', id=a.id) }}" class="btn btn-eliminar"
-                   onclick="return confirm('¿Eliminar actividad?')">🗑️</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+            <tbody>
+                {% for a in actividades %}
+                <tr>
+                    <td>{{ a.id }}</td>
+                    <td>{{ a.descripcion }}</td>
+                    <td>{{ a.fecha }}</td>
+                    <td>{{ a.cultivo }}</td>
+                    <td>
+                        <a href="{{ url_for('actividades.editar', id=a.id) }}" class="btn btn-editar">✏️</a>
+                        <a href="{{ url_for('actividades.eliminar', id=a.id) }}" class="btn btn-eliminar">🗑️</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+</div>
 
 {% endblock %}
